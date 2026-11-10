@@ -61,7 +61,7 @@ class YTDLPGUIApp:
         self.root = ctk.CTk()
         self.logger.debug("[STARTUP] CTk window created")
         flush_logs()
-        self.root.title("yt-dlp GUI")
+        self.root.title("视频下载器 · hejiarong31")
         self.root.geometry("1200x750")
         self.root.minsize(1000, 650)
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -110,7 +110,7 @@ class YTDLPGUIApp:
         if not self._update_info or not self._update_info.get("download_url"):
             return
 
-        self.update_btn.configure(text="Downloading...", state="disabled")
+        self.update_btn.configure(text="下载更新中...", state="disabled")
 
         def _do_update():
             try:
@@ -120,7 +120,7 @@ class YTDLPGUIApp:
                     self.root.after(
                         0,
                         lambda: self.update_btn.configure(
-                            text=f"Downloading... {int(p * 100)}%"
+                            text=f"下载更新中... {int(p * 100)}%"
                         )
                     )
 
@@ -131,14 +131,14 @@ class YTDLPGUIApp:
                 )
 
                 if exe_path:
-                    self.root.after(0, lambda: self.update_btn.configure(text="Applying..."))
+                    self.root.after(0, lambda: self.update_btn.configure(text="正在应用..."))
                     self.update_checker.apply_update(exe_path)
                     self.root.after(1500, self._exit_for_update)
                 else:
                     self.root.after(
                         0,
                         lambda: self.update_btn.configure(
-                            text="Update Failed",
+                            text="更新失败",
                             fg_color="#F1F1F1",
                             state="normal"
                         )
@@ -149,7 +149,7 @@ class YTDLPGUIApp:
                 self.root.after(
                     0,
                     lambda: self.update_btn.configure(
-                        text="Update Failed",
+                        text="更新失败",
                         fg_color="#F1F1F1",
                         state="normal"
                     )
@@ -160,7 +160,7 @@ class YTDLPGUIApp:
     def _show_update_button(self):
         """Show update button in top-right corner"""
         self.update_btn.configure(
-            text="Update",
+            text="检查更新",
             fg_color="#F1F1F1",
             state="normal"
         )
@@ -224,7 +224,7 @@ class YTDLPGUIApp:
 
         self.back_button = ctk.CTkButton(
             self.fixed_buttons_frame,
-            text="Back",
+            text="返回",
             width=120,
             height=36,
             font=ctk.CTkFont(size=13),
@@ -234,7 +234,7 @@ class YTDLPGUIApp:
 
         self.start_button = ctk.CTkButton(
             self.fixed_buttons_frame,
-            text="Start",
+            text="开始下载",
             width=120,
             height=36,
             font=ctk.CTkFont(size=13),

@@ -66,7 +66,7 @@ def _ensure_binaries():
         except:
             pass
 
-        tk.Label(root, text="First launch - downloading components...",
+        tk.Label(root, text="首次启动 - 正在下载运行组件...",
                  fg='#e0e0e0', bg='#1a1a2e', font=('Segoe UI', 12)).pack(pady=(20, 5))
         status = tk.Label(root, text="", fg='#a0a0a0', bg='#1a1a2e', font=('Segoe UI', 9))
         status.pack(pady=(0, 10))
@@ -89,9 +89,9 @@ def _ensure_binaries():
 
         if not result[0]:
             messagebox.showerror(
-                "Download failed",
-                "Could not download required components.\n"
-                "Check your internet connection and try again."
+                "下载失败",
+                "无法下载运行所需的组件。\n"
+                "请检查网络连接后重试。"
             )
             return False
     except Exception as e:
