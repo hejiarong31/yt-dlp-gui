@@ -10,10 +10,18 @@ import subprocess
 import platform
 from pathlib import Path
 
+# Console output may be a legacy code page (GBK/cp437) that cannot represent the
+# Chinese app name; never let a failed print abort the build.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding='utf-8', errors='replace')
+    except Exception:
+        pass
+
 # Application information
-APP_NAME = "yt-dlp-gui"
-APP_VERSION = "1"
-APP_DESCRIPTION = "Desktop GUI for yt-dlp"
+APP_NAME = "视频下载器"
+APP_VERSION = "1.0.0"
+APP_DESCRIPTION = "视频下载器 - 基于 yt-dlp 的桌面客户端"
 
 # Build configuration
 BUILD_DIR = Path("build")
@@ -166,8 +174,12 @@ exe = EXE(
 '''
     
     # Write spec file
+    # NOTE: PyInstaller always reads .spec files as UTF-8, so the file must be
+    # written as UTF-8 explicitly. Relying on the platform default (GBK on
+    # Chinese Windows) makes non-ASCII app names break the build with a
+    # "unicode error" inside the generated spec.
     spec_file = Path(f"{APP_NAME}.spec")
-    with open(spec_file, 'w') as f:
+    with open(spec_file, 'w', encoding='utf-8') as f:
         f.write(spec_content)
     
     print(f"   Created {spec_file}")
